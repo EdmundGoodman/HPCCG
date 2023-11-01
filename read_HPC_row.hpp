@@ -37,7 +37,6 @@
 //
 // ************************************************************************
 
-
 #ifndef READ_HPC_ROW_H
 #define READ_HPC_ROW_H
 #ifdef USING_MPI

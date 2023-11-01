@@ -99,7 +99,6 @@ void destroyMatrix(HPC_Sparse_Matrix *&A) {
     A = 0;
 }
 
-
 #ifdef USING_SHAREDMEM_MPI
 #ifndef SHAREDMEM_ALTERNATIVE
 /**

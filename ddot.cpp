@@ -50,7 +50,8 @@
  * @param n The number of vector elements (on this processor).
  * @param x The first input vector.
  * @param y The second input vector.
- * @param result A pointer to a scalar value, which is updated to contain the calculated dot product.
+ * @param result A pointer to a scalar value, which is updated to contain the calculated dot
+ * product.
  * @param time_allreduce A mutable variable tracking the time spent by MPI's reduce function.
  * @return An exit code of zero on success.
  */

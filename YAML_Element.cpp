@@ -109,7 +109,8 @@ YAML_Element* YAML_Element::add(const std::string& key_arg, const std::string& v
 }
 
 /**
- * Return a pointer to the YAML element with the specified key if it exists in the vector of YAML elements.
+ * Return a pointer to the YAML element with the specified key if it exists in the vector of YAML
+ * elements.
  *
  * @note I, cam, believe an exception should be thrown if there is no
  * element in the vector for the specified key

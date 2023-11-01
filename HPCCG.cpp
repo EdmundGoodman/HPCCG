@@ -49,18 +49,21 @@ using std::endl;
 #define TICK() t0 = mytimer()  // Use TICK and TOCK to time a code section
 #define TOCK(t) t += mytimer() - t0
 
-
 /**
  * A method to computer the approximate solution to `Ax = b`
  *
  * @param A The input sparse matrix.
  * @param b The known right hand side vector.
  * @param x The current approximate solution, which starts as the initial guess.
- * @param max_iter - The maximum number of iterations to perform.
- * @param tolerance - The value the residual needs to be less than for convergence (how "good" of a solution do we need).
- * @param niters - The mutable number of iterations performed before convergence or the iteration limit is reached.
- * @param normr - The mutable residual between the current approximate solution and the exact solution.
- * @param times - A mutable array which tracks the time spent for each operation (ddot/waxpby/sparse_mv/total).
+ * @param max_iter The maximum number of iterations to perform.
+ * @param tolerance The value the residual needs to be less than for convergence (how "good" of a
+ * solution do we need).
+ * @param niters The mutable number of iterations performed before convergence or the iteration
+ * limit is reached.
+ * @param normr The mutable residual between the current approximate solution and the exact
+ * solution.
+ * @param times A mutable array which tracks the time spent for each operation
+ * (ddot/waxpby/sparse_mv/total).
  * @return An exit code of zero on success.
  */
 int HPCCG(HPC_Sparse_Matrix *A, const double *const b, double *const x, const int max_iter,
