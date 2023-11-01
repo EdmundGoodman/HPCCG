@@ -1,5 +1,3 @@
-
-# @HEADER
 # ***********************************************************************
 #  
 #                HPCCG: Simple Conjugate Gradient Benchmark Code
@@ -38,7 +36,6 @@
 #  Questions? Contact Michael A. Heroux (maherou@sandia.gov) 
 #  
 #  ************************************************************************
-# @HEADER
 
 # Simple hand-tuned makefile.  Modify as necessary for your environment.
 # Questions? Contact Mike Heroux (maherou@sandia.gov).
@@ -47,8 +44,10 @@
 #
 # 0) Specify compiler and linker:
 
-CXX=/usr/local/bin/g++
-LINKER=/usr/local/bin/g++
+#CXX=/usr/local/bin/g++
+#LINKER=/usr/local/bin/g++
+CXX=/usr/bin/g++
+LINKER=/usr/bin/g++
 #CXX=mpicxx
 #LINKER=mpicxx
 
@@ -131,8 +130,18 @@ TEST_OBJ          = $(TEST_CPP:.cpp=.o)
 $(TARGET): $(TEST_OBJ)
 	$(LINKER) $(CPP_OPT_FLAGS) $(OMP_FLAGS) $(TEST_OBJ) $(LIB_PATHS) -o $(TARGET)
 
+.PHONY: test
 test:
 	@echo "Not implemented yet..."
 
+.PHONY: clean
 clean:
-	@rm -f *.o  *~ $(TARGET) $(TARGET).exe test_HPCPCG 
+	@rm -f *.o *~ $(TARGET) $(TARGET).exe test_HPCPCG
+
+.PHONY: no_yaml
+no_yaml:
+	@rm *.yaml
+
+.PHONY: format
+format:
+	clang-format -style=file -i *.cpp *.hpp
