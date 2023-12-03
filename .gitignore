@@ -4,8 +4,7 @@
 
 # Project-specific output files
 hpccg-*.yaml
-test_HPCCG#
-old/
+test_HPCCG
 
 # Prerequisites
 *.d

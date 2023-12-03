@@ -127,6 +127,9 @@ TEST_CPP = main.cpp generate_matrix.cpp read_HPC_row.cpp \
 
 TEST_OBJ          = $(TEST_CPP:.cpp=.o)
 
+.PHONY: all
+all: clean $(TARGET)
+
 $(TARGET): $(TEST_OBJ)
 	$(LINKER) $(CPP_OPT_FLAGS) $(OMP_FLAGS) $(TEST_OBJ) $(LIB_PATHS) -o $(TARGET)
 
@@ -140,8 +143,8 @@ clean:
 
 .PHONY: no_yaml
 no_yaml:
-	@rm *.yaml
+	@rm -f *.yaml
 
 .PHONY: format
 format:
-	clang-format -style=file -i *.cpp *.hpp
+	@clang-format -style=file -i *.cpp *.hpp
