@@ -1,5 +1,3 @@
-
-//@HEADER
 // ************************************************************************
 //
 //               HPCCG: Simple Conjugate Gradient Benchmark Code
@@ -38,27 +36,6 @@
 // Questions? Contact Michael A. Heroux (maherou@sandia.gov)
 //
 // ************************************************************************
-//@HEADER
-
-// Main routine of a program that reads a sparse matrix, right side
-// vector, solution vector and initial guess from a file  in HPC
-// format.  This program then calls the HPCCG conjugate gradient
-// solver to solve the problem, and then prints results.
-
-// Calling sequence:
-
-// test_HPCCG linear_system_file
-
-// Routines called:
-
-// read_HPC_row - Reads in linear system
-
-// mytimer - Timing routine (compile with -DWALL to get wall clock
-//           times
-
-// HPCCG - CG Solver
-
-// compute_residual - Compares HPCCG solution to known solution.
 
 #include <iostream>
 using std::cerr;
@@ -105,7 +82,13 @@ using std::endl;
  * 3. Print the result of the solver, and information about the performance
  *    of the computation.
  *
- * Usage:
+ * Routines called:
+ *  - `read_HPC_row`, reads in linear system.
+ *  - `mytimer`, timing routine (compile with -DWALL to get wall clock times).
+ *  - `HPCCG`, conjugate gradient solver.
+ *  - `compute_residual`, compares HPCCG solution to known solution.
+ *
+ * Command line usage:
  * - Mode 1, to generate matrix data of a specified size:
  *   - `./test_HPCCG nx ny nz` where nx, ny and nz are the local sub-block dimensions
  * - Mode 2, to read an existing matrix from a file:
