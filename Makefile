@@ -119,11 +119,11 @@ CXXFLAGS= $(CPP_OPT_FLAGS) $(OMP_FLAGS) $(USE_OMP) $(USE_MPI) $(MPI_INC)
 
 LIB_PATHS= $(SYS_LIB)
 
-TEST_CPP = main.cpp generate_matrix.cpp read_HPC_row.cpp \
-	  compute_residual.cpp mytimer.cpp dump_matlab_matrix.cpp \
-          HPC_sparsemv.cpp HPCCG.cpp waxpby.cpp ddot.cpp \
-          make_local_matrix.cpp exchange_externals.cpp \
-          YAML_Element.cpp YAML_Doc.cpp
+TEST_CPP = src/main.cpp src/generate_matrix.cpp src/read_HPC_row.cpp \
+	  src/compute_residual.cpp src/mytimer.cpp src/dump_matlab_matrix.cpp \
+          src/HPC_sparsemv.cpp src/HPCCG.cpp src/waxpby.cpp src/ddot.cpp \
+          src/make_local_matrix.cpp src/exchange_externals.cpp \
+          src/YAML_Element.cpp src/YAML_Doc.cpp
 
 TEST_OBJ          = $(TEST_CPP:.cpp=.o)
 
@@ -139,7 +139,7 @@ test:
 
 .PHONY: clean
 clean:
-	@rm -f *.o *~ $(TARGET) $(TARGET).exe test_HPCPCG
+	@rm -f src/*.o src/*~ $(TARGET) $(TARGET).exe
 
 .PHONY: no_yaml
 no_yaml:
@@ -147,4 +147,4 @@ no_yaml:
 
 .PHONY: format
 format:
-	@clang-format -style=file -i *.cpp *.hpp
+	@clang-format -style=file -i src/*.cpp src/*.hpp
