@@ -43,13 +43,12 @@ set(OMP_FLAGS "")
 # 6) System libraries: (May need to add -lg2c before -lm)
 set(SYS_LIB "-lm")
 
-#set(CMAKE_CXX_FLAGS "${CPP_OPT_FLAGS} ${OMP_FLAGS} ${USE_OMP} ${USE_MPI} ${MPI_INC} ${SYS_LIB}")
-set(CMAKE_CXX_FLAGS "")
 
+set(CMAKE_CXX_FLAGS "${CPP_OPT_FLAGS} ${OMP_FLAGS} ${USE_OMP} ${USE_MPI} ${MPI_INC} ${SYS_LIB}")
 
-# Ensure the exectuables are outputted correctly
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${PROJECT_SOURCE_DIR}")
 
 
 
 add_subdirectory(src)
+add_subdirectory(test)
+enable_testing()

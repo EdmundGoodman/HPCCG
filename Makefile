@@ -1,4 +1,5 @@
 TARGET = test_HPCCG
+TEST_TARGET = Catch2Tests
 CMAKE_BUILD_DIR = build
 
 .PHONY: all
@@ -11,8 +12,9 @@ $(TARGET): $(CMAKE_BUILD_DIR)
 	cmake --build $(CMAKE_BUILD_DIR) --target $(TARGET)
 
 .PHONY: test
-test:
-	@echo "Not implemented yet..."
+test: $(CMAKE_BUILD_DIR)
+	cmake --build $(CMAKE_BUILD_DIR) --target $(TEST_TARGET)
+	./$(CMAKE_BUILD_DIR)/test/$(TEST_TARGET)
 
 .PHONY: clean
 clean:
