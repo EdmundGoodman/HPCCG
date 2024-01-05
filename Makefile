@@ -139,7 +139,7 @@ test:
 
 .PHONY: clean
 clean:
-	@rm -f src/*.o src/*~ $(TARGET) $(TARGET).exe
+	@rm -f *.o *~ src/*.o src/*~ $(TARGET) $(TARGET).exe
 
 .PHONY: no_yaml
 no_yaml:
