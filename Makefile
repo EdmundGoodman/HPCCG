@@ -13,7 +13,7 @@ $(TARGET): $(CMAKE_BUILD_DIR)
 
 .PHONY: test
 test: $(CMAKE_BUILD_DIR)
-	cmake --build $(CMAKE_BUILD_DIR) --target $(TEST_TARGET)
+	cmake --build $(CMAKE_BUILD_DIR) --target $(TEST_TARGET) -j 6
 	./$(CMAKE_BUILD_DIR)/test/$(TEST_TARGET)
 
 .PHONY: clean
