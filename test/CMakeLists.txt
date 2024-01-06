@@ -6,7 +6,12 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(Catch2)
 
-add_executable(Catch2Tests test_generate_matrix.cpp)
+set(TEST_SOURCE_FILES
+        test_generate_matrix.cpp test_ddot.cpp test_waxpby.cpp
+        test_compute_residual.cpp test_sparsemv.cpp test_HPCCG.cpp
+)
+
+add_executable(Catch2Tests ${TEST_SOURCE_FILES})
 target_link_libraries(Catch2Tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(Catch2Tests PRIVATE HPCCG)
 

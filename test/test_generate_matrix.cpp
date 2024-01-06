@@ -17,8 +17,8 @@ TEST_CASE("Test sparse matrix generation") {
     }
 
     SECTION("Check number of non-zeroes") {
-        for (int i = 0; i < 8; i++)
-            REQUIRE(A->nnz_in_row[i] == 8);
+        for (int i = 0; i < A->local_nrow; i++)
+            REQUIRE(A->nnz_in_row[i] == A->local_nrow);
 
     }
 
@@ -36,11 +36,11 @@ TEST_CASE("Test sparse matrix generation") {
     }
 
     SECTION("Check auxiliary generated data") {
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < A->local_nrow; i++)
             REQUIRE(x[i] == 0.0);
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < A->local_nrow; i++)
             REQUIRE(b[i] == 20.0);
-        for (int i = 0; i < 8; i++)
+        for (int i = 0; i < A->local_nrow; i++)
             REQUIRE(xexact[i] == 1.0);
 
     }
