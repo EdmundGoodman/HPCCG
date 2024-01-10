@@ -8,6 +8,7 @@ test_HPCCG
 *.srctrlbm
 *.srctrldb
 *.srctrlprj
+perf.data*
 
 # Prerequisites
 *.d
