@@ -4,7 +4,7 @@
 
 # Project-specific output files
 hpccg-*.yaml
-test_HPCCG
+test_HPCCG*
 *.srctrlbm
 *.srctrldb
 *.srctrlprj
@@ -45,3 +45,11 @@ perf.data*
 
 # CMake
 build/
+
+
+### JetBrains IDE excludes ###
+.idea/workspace.xml
+.idea/usage.statistics.xml
+.idea/shelf/
+.idea/tasks.xml
+.idea/sonarlint/
