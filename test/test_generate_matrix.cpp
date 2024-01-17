@@ -1,9 +1,23 @@
 #include <catch2/catch_test_macros.hpp>
-#include "../src/HPC_Sparse_Matrix.hpp"
-#include "../src/generate_matrix.hpp"
 #include <cmath>
 
+#include "../src/HPC_Sparse_Matrix.hpp"
+#include "../src/generate_matrix.hpp"
+
+#ifdef USING_MPI
+#include <mpi.h>
+#endif
+
 TEST_CASE("Test sparse matrix generation") {
+#ifdef USING_MPI
+    char **argv = {};
+    int argc = 0;
+    MPI_Init(&argc, &argv);
+    int size, rank;  // Number of MPI processes, My process ID
+    MPI_Comm_size(MPI_COMM_WORLD, &size);
+    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
+#endif
+
     int nx = 2;
     int ny = 2;
     int nz = 2;
@@ -17,33 +31,25 @@ TEST_CASE("Test sparse matrix generation") {
     }
 
     SECTION("Check number of non-zeroes") {
-        for (int i = 0; i < A->local_nrow; i++)
-            REQUIRE(A->nnz_in_row[i] == A->local_nrow);
-
+        for (int i = 0; i < A->local_nrow; i++) REQUIRE(A->nnz_in_row[i] == A->local_nrow);
     }
 
     SECTION("Check matrix data") {
         double expected_val[] = {
-            27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0,
-            -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0,
-            -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0,
-            27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0,
-            -1.0, -1.0, -1.0, 27.0,
+            27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0,
+            -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0,
+            -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0,
+            -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0,
+            -1.0, -1.0, 27.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, -1.0, 27.0,
         };
-        REQUIRE(pow(A->local_nrow, 2) == sizeof(expected_val)/sizeof(double));
+        REQUIRE(pow(A->local_nrow, 2) == sizeof(expected_val) / sizeof(double));
         for (int i = 0; i < pow(A->local_nrow, 2); i++)
             REQUIRE(A->list_of_vals[i] == expected_val[i]);
     }
 
     SECTION("Check auxiliary generated data") {
-        for (int i = 0; i < A->local_nrow; i++)
-            REQUIRE(x[i] == 0.0);
-        for (int i = 0; i < A->local_nrow; i++)
-            REQUIRE(b[i] == 20.0);
-        for (int i = 0; i < A->local_nrow; i++)
-            REQUIRE(xexact[i] == 1.0);
-
+        for (int i = 0; i < A->local_nrow; i++) REQUIRE(x[i] == 0.0);
+        for (int i = 0; i < A->local_nrow; i++) REQUIRE(b[i] == 20.0);
+        for (int i = 0; i < A->local_nrow; i++) REQUIRE(xexact[i] == 1.0);
     }
 }
-
-

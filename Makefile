@@ -7,14 +7,12 @@ SHELL := bash
 TARGET = test_HPCCG
 TEST_TARGET = Catch2Tests
 CMAKE_BUILD_DIR = build
-# CC=/usr/bin/mpicxx
-# CXX=/usr/bin/mpicxx
 export CC=/usr/bin/clang++
 export CXX=/usr/bin/clang++
 # NOTE: You will need to clean build when changing these values
-export USE_OMP=1
-export USE_MPI=1
-export EXTRA_COMPILER_FLAGS=-g -Wall -Wextra
+# export USE_OMP=1
+# export USE_MPI=1
+# export EXTRA_COMPILER_FLAGS=-g -Wall -Wextra
 
 # Build targets
 .PHONY: all

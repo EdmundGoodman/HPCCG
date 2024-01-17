@@ -15,6 +15,16 @@ add_executable(Catch2Tests ${TEST_SOURCE_FILES})
 target_link_libraries(Catch2Tests PRIVATE Catch2::Catch2WithMain)
 target_link_libraries(Catch2Tests PRIVATE HPCCG)
 
+# If the environment variable is set, build with MPI
+if ($ENV{USE_MPI})
+    find_package(MPI REQUIRED)
+    message(STATUS "Run: ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} EXECUTABLE ${MPIEXEC_POSTFLAGS} ARGS")
+    target_link_libraries(Catch2Tests PUBLIC MPI::MPI_CXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSING_MPI")
+    message(STATUS "Updated CXX flags: ${CMAKE_CXX_FLAGS}")
+endif()
+
+
 list(APPEND CMAKE_MODULE_PATH ${catch2_SOURCE_DIR}/contrib)
 include(CTest)
 include(Catch)

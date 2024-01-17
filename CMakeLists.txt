@@ -7,7 +7,7 @@ project(
 )
 set(CMAKE_CXX_STANDARD 17)
 
-# Specify C++ compiler flags (if any)
+# Specify C++ compiler flags
 set(CMAKE_CXX_FLAGS "-O3 $ENV{EXTRA_COMPILER_FLAGS}")
 message(STATUS "CXX flags: ${CMAKE_CXX_FLAGS}")
 

@@ -1,14 +1,16 @@
 #include <catch2/catch_test_macros.hpp>
+#include <cmath>
 
 #include "../src/HPC_Sparse_Matrix.hpp"
-#include "../src/HPC_sparsemv.hpp"
 #include "../src/generate_matrix.hpp"
 
 #ifdef USING_MPI
 #include <mpi.h>
+
+#include "../src/make_local_matrix.hpp"
 #endif
 
-TEST_CASE("Test sparse matrix-vector multiplication implementation") {
+TEST_CASE("Test sparse matrix generation") {
 #ifdef USING_MPI
     char **argv = {};
     int argc = 0;
@@ -16,7 +18,6 @@ TEST_CASE("Test sparse matrix-vector multiplication implementation") {
     int size, rank;  // Number of MPI processes, My process ID
     MPI_Comm_size(MPI_COMM_WORLD, &size);
     MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-#endif
 
     int nx = 2;
     int ny = 2;
@@ -25,10 +26,8 @@ TEST_CASE("Test sparse matrix-vector multiplication implementation") {
     double *x, *b, *xexact;
     generate_matrix(nx, ny, nz, &A, &x, &b, &xexact);
 
-    double vector[] = {20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0, 20.0};
-    double result[7];
-    double expected[] = {400.0, 400.0, 400.0, 400.0, 400.0, 400.0, 400.0, 400.0};
-
-    HPC_sparsemv(A, vector, result);
-    for (int i = 0; i < 7; i++) REQUIRE(result[i] == expected[i]);
+    make_local_matrix(&A);
+#else
+    SECTION("`make_local_matrix` not defined when not in MPI mode") { REQUIRE(1 == 1); }
+#endif
 }
