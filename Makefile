@@ -2,6 +2,9 @@ TARGET = test_HPCCG
 TEST_TARGET = Catch2Tests
 CMAKE_BUILD_DIR = build
 
+CC=/usr/bin/mpicxx
+CXX=/usr/bin/mpicxx
+
 .PHONY: all
 all: clean $(TARGET)
 
