@@ -2,20 +2,7 @@
 
 #include "../src/ddot.hpp"
 
-#ifdef USING_MPI
-#include <mpi.h>
-#endif
-
 TEST_CASE("Test dot product implementation") {
-#ifdef USING_MPI
-    char **argv = {};
-    int argc = 0;
-    MPI_Init(&argc, &argv);
-    int size, rank;  // Number of MPI processes, My process ID
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-#endif
-
     int width = 3;
     double lhs[] = {1.0, 2.0, 3.0};
     double rhs[] = {3.0, 2.0, 1.0};

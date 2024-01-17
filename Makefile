@@ -12,7 +12,7 @@ export CXX=/usr/bin/clang++
 # NOTE: You will need to clean build when changing these values
 # export USE_OMP=1
 # export USE_MPI=1
-# export EXTRA_COMPILER_FLAGS=-g -Wall -Wextra
+export DEBUG=1
 
 # Build targets
 .PHONY: all

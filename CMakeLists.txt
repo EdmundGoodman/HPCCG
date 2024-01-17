@@ -7,9 +7,14 @@ project(
 )
 set(CMAKE_CXX_STANDARD 17)
 
-# Specify C++ compiler flags
-set(CMAKE_CXX_FLAGS "-O3 $ENV{EXTRA_COMPILER_FLAGS}")
-message(STATUS "CXX flags: ${CMAKE_CXX_FLAGS}")
+# Specify global C++ compiler flags
+add_compile_options(-O3)
+
+# Set Debug mode if an environment variable is set
+if($ENV{DEBUG})
+    set(CMAKE_BUILD_TYPE Debug)
+endif()
+message(STATUS "CMake build type: ${CMAKE_BUILD_TYPE}")
 
 # Build the source and test directories
 add_subdirectory(src)

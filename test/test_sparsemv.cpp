@@ -4,20 +4,7 @@
 #include "../src/HPC_sparsemv.hpp"
 #include "../src/generate_matrix.hpp"
 
-#ifdef USING_MPI
-#include <mpi.h>
-#endif
-
 TEST_CASE("Test sparse matrix-vector multiplication implementation") {
-#ifdef USING_MPI
-    char **argv = {};
-    int argc = 0;
-    MPI_Init(&argc, &argv);
-    int size, rank;  // Number of MPI processes, My process ID
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-#endif
-
     int nx = 2;
     int ny = 2;
     int nz = 2;

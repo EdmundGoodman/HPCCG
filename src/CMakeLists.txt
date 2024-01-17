@@ -7,7 +7,16 @@ set(SOURCE_FILES
         dump_matlab_matrix.cpp HPC_sparsemv.cpp HPCCG.cpp waxpby.cpp ddot.cpp
         make_local_matrix.cpp exchange_externals.cpp YAML_Element.cpp YAML_Doc.cpp
 )
-add_library (HPCCG ${SOURCE_FILES})
+add_library(HPCCG ${SOURCE_FILES})
+
+# Set debugging compile options
+if(CMAKE_BUILD_TYPE MATCHES "Debug")
+    target_compile_options(HPCCG PUBLIC -DDEBUG)
+    target_compile_options(HPCCG PUBLIC -Wall -Wextra)
+    target_compile_options(HPCCG PUBLIC -g -fno-omit-frame-pointer)
+    target_compile_options(HPCCG PUBLIC -fsanitize=address -fsanitize=undefined)
+    target_link_options(HPCCG PUBLIC -fsanitize=address -fsanitize=undefined)
+endif()
 
 # If the environment variable is set, build with OpenMP
 if ($ENV{USE_OMP})
@@ -15,8 +24,7 @@ if ($ENV{USE_OMP})
     if(OpenMP_CXX_FOUND)
         target_link_libraries(HPCCG PUBLIC OpenMP::OpenMP_CXX)
     endif()
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSING_OMP")
-    message(STATUS "Updated CXX flags: ${CMAKE_CXX_FLAGS}")
+    target_compile_options(HPCCG PUBLIC -DUSING_OMP)
 endif()
 
 # If the environment variable is set, build with MPI
@@ -24,10 +32,11 @@ if ($ENV{USE_MPI})
     find_package(MPI REQUIRED)
     message(STATUS "Run: ${MPIEXEC} ${MPIEXEC_NUMPROC_FLAG} ${MPIEXEC_MAX_NUMPROCS} ${MPIEXEC_PREFLAGS} EXECUTABLE ${MPIEXEC_POSTFLAGS} ARGS")
     target_link_libraries(HPCCG PUBLIC MPI::MPI_CXX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DUSING_MPI")
-    message(STATUS "Updated CXX flags: ${CMAKE_CXX_FLAGS}")
+    target_compile_options(HPCCG PUBLIC -DUSING_MPI)
 endif()
 
+get_target_property(HPCCG_lib_CFLAGS HPCCG COMPILE_OPTIONS)
+message(STATUS "CXX HPCCG library flags: ${HPCCG_lib_CFLAGS}")
 
 add_executable (test_HPCCG main.cpp)
 target_link_libraries (test_HPCCG HPCCG)

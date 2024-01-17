@@ -5,20 +5,7 @@
 #include "../src/compute_residual.hpp"
 #include "../src/generate_matrix.hpp"
 
-#ifdef USING_MPI
-#include <mpi.h>
-#endif
-
 TEST_CASE("Integration test HPCCG solver") {
-#ifdef USING_MPI
-    char **argv = {};
-    int argc = 0;
-    MPI_Init(&argc, &argv);
-    int size, rank;  // Number of MPI processes, My process ID
-    MPI_Comm_size(MPI_COMM_WORLD, &size);
-    MPI_Comm_rank(MPI_COMM_WORLD, &rank);
-#endif
-
     // Generate the sparse matrix for the test
     int nx = 5;
     int ny = 5;
