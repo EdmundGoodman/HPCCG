@@ -5,9 +5,6 @@
 # Project-specific output files
 hpccg-*.yaml
 test_HPCCG*
-*.srctrlbm
-*.srctrldb
-*.srctrlprj
 perf.data*
 
 # Prerequisites
