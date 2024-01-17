@@ -9,7 +9,14 @@ TEST_TARGET = Catch2Tests
 CMAKE_BUILD_DIR = build
 # CC=/usr/bin/mpicxx
 # CXX=/usr/bin/mpicxx
+export CC=/usr/bin/clang++
+export CXX=/usr/bin/clang++
+# NOTE: You will need to clean build when changing these values
+export USE_OMP=1
+export USE_MPI=1
+export EXTRA_COMPILER_FLAGS=-g -Wall -Wextra
 
+# Build targets
 .PHONY: all
 all: clean $(TARGET)
 
@@ -24,6 +31,7 @@ test: $(CMAKE_BUILD_DIR)
 	cmake --build $(CMAKE_BUILD_DIR) --target $(TEST_TARGET) -j 6
 	./$(CMAKE_BUILD_DIR)/test/$(TEST_TARGET)
 
+# Utility targets
 .PHONY: clean
 clean:
 	rm -rf $(TARGET) $(CMAKE_BUILD_DIR)
