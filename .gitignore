@@ -1,12 +1,10 @@
-# Editor settings
-.idea/
-.vscode/
-
-# Project-specific output files
+### Project-specific excludes ###
 hpccg-*.yaml
 test_HPCCG*
 perf.data*
 
+
+### C++ excludes ###
 # Prerequisites
 *.d
 
@@ -42,6 +40,10 @@ perf.data*
 
 # CMake
 build/
+
+
+### VSCode IDE excludes ###
+.cache/
 
 
 ### JetBrains IDE excludes ###
