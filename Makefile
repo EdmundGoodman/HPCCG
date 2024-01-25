@@ -10,9 +10,9 @@ CMAKE_BUILD_DIR = build
 export CC=/usr/bin/clang++
 export CXX=/usr/bin/clang++
 # NOTE: You will need to clean build when changing these values
-# export USE_OMP=1
-# export USE_MPI=1
-export DEBUG=1
+export USE_OMP=1
+export USE_MPI=1
+# export DEBUG=1
 
 # Build targets
 .PHONY: all
@@ -22,7 +22,7 @@ $(CMAKE_BUILD_DIR):
 	cmake -S . -B build -DCMAKE_EXPORT_COMPILE_COMMANDS=1
 
 $(TARGET): $(CMAKE_BUILD_DIR)
-	cmake --build $(CMAKE_BUILD_DIR) --target $(TARGET)
+	cmake --build $(CMAKE_BUILD_DIR) --target $(TARGET) -j 6
 
 .PHONY: test
 test: $(CMAKE_BUILD_DIR)

@@ -73,9 +73,10 @@ string YAML_Doc::generateYAML() {
     } else
         filename = "./" + filename;
 
-    ofstream myfile;
-    myfile.open(filename.c_str());
-    myfile << yaml;
-    myfile.close();
+    // TODO: Re-enable dumping YAML
+    // ofstream myfile;
+    // myfile.open(filename.c_str());
+    // myfile << yaml;
+    // myfile.close();
     return yaml;
 }
