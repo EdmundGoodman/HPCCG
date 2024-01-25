@@ -58,16 +58,23 @@
 int ddot(const int n, const double* const x, const double* const y, double* const result,
          double& time_allreduce) {
     double local_result = 0.0;
-    if (y == x)
-#ifdef USING_OMP
-#pragma omp parallel for reduction(+ : local_result)
-#endif
-        for (int i = 0; i < n; i++) local_result += x[i] * x[i];
-    else
-#ifdef USING_OMP
-#pragma omp parallel for reduction(+ : local_result)
-#endif
-        for (int i = 0; i < n; i++) local_result += x[i] * y[i];
+    if (y == x) {
+// #ifdef USING_OMP
+// #pragma omp parallel for reduction(+ : local_result)
+// #endif
+        // #pragma omp parallel for reduction(+ : local_result)
+        for (int i = 0; i < n; i++) {
+            local_result += x[i] * x[i];
+        };
+    } else {
+// #ifdef USING_OMP
+// #pragma omp parallel for reduction(+ : local_result)
+// #endif
+        // #pragma omp parallel for reduction(+ : local_result)
+        for (int i = 0; i < n; i++) {
+            local_result += x[i] * y[i];
+        };
+    }
 
 #ifdef USING_MPI
     // Use MPI's reduce function to collect all partial sums
