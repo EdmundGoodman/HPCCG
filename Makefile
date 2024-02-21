@@ -10,8 +10,8 @@ CMAKE_BUILD_DIR = build
 export CC=/usr/bin/clang++
 export CXX=/usr/bin/clang++
 # NOTE: You will need to clean build when changing these values
-export USE_OMP=1
-export USE_MPI=1
+# export USE_MPI=1
+export USE_KOKKOS=1
 # export DEBUG=1
 
 # Build targets

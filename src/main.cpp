@@ -52,6 +52,9 @@ using std::endl;
                                   // then include mpi.h
 #include "make_local_matrix.hpp"  // Also include this function
 #endif
+#ifdef USING_KOKKOS
+#include <Kokkos_Core.hpp>
+#endif
 #ifdef USING_OMP
 #include <omp.h>
 #endif
@@ -109,6 +112,10 @@ int main(int argc, char *argv[]) {
     double times[7];
     double t6 = 0.0;
     int nx, ny, nz;
+
+#ifdef USING_KOKKOS
+    Kokkos::initialize(argc, argv);
+#endif
 
 #ifdef USING_MPI
 
@@ -291,6 +298,9 @@ int main(int argc, char *argv[]) {
     //        << residual << ".\n" << endl;
 
     // Finish up
+#ifdef USING_KOKKOS
+    Kokkos::finalize();
+#endif
 #ifdef USING_MPI
     MPI_Finalize();
 #endif

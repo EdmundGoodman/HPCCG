@@ -37,7 +37,12 @@
 //
 // ************************************************************************
 
+#ifdef USING_KOKKOS
+#endif
 #include "ddot.hpp"
+
+#include <Kokkos_Core.hpp>
+#include <iostream>
 
 /**
  * A method to compute the dot product of two vectors.
@@ -58,16 +63,25 @@
 int ddot(const int n, const double* const x, const double* const y, double* const result,
          double& time_allreduce) {
     double local_result = 0.0;
-    if (y == x)
-#ifdef USING_OMP
-#pragma omp parallel for reduction(+ : local_result)
+    if (y == x) {
+#ifdef USING_KOKKOS
+    Kokkos::parallel_reduce(
+        n, KOKKOS_LAMBDA(const int i, double& ksum) { ksum += x[i] * x[i]; }, local_result);
+#else
+    for (int i = 0; i < n; i++) {
+        local_result += x[i] * x[i];
+    }
 #endif
-        for (int i = 0; i < n; i++) local_result += x[i] * x[i];
-    else
-#ifdef USING_OMP
-#pragma omp parallel for reduction(+ : local_result)
+    } else {
+#ifdef USING_KOKKOS
+    Kokkos::parallel_reduce(
+        n, KOKKOS_LAMBDA(const int i, double& ksum) { ksum += x[i] * y[i]; }, local_result);
+#else
+        for (int i = 0; i < n; i++) {
+            local_result += x[i] * y[i];
+        }
 #endif
-        for (int i = 0; i < n; i++) local_result += x[i] * y[i];
+    }
 
 #ifdef USING_MPI
     // Use MPI's reduce function to collect all partial sums

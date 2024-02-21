@@ -9,13 +9,11 @@ set(SOURCE_FILES
 )
 add_library(HPCCG ${SOURCE_FILES})
 
-# If the environment variable is set, build with OpenMP
-if ($ENV{USE_OMP})
-    find_package(OpenMP)
-    if(OpenMP_CXX_FOUND)
-        target_link_libraries(HPCCG PUBLIC OpenMP::OpenMP_CXX)
-    endif()
-    target_compile_options(HPCCG PUBLIC -DUSING_OMP)
+# If the environment variable is set, build with Kokkos
+if ($ENV{USE_KOKKOS})
+    find_package(Kokkos REQUIRED)
+    target_link_libraries(HPCCG PUBLIC Kokkos::kokkos)
+    target_compile_options(HPCCG PUBLIC -DUSING_KOKKOS)
 endif()
 
 # If the environment variable is set, build with MPI
