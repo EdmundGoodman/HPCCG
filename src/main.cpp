@@ -55,9 +55,6 @@ using std::endl;
 #ifdef USING_KOKKOS
 #include <Kokkos_Core.hpp>
 #endif
-#ifdef USING_OMP
-#include <omp.h>
-#endif
 #include "HPCCG.hpp"
 #include "HPC_Sparse_Matrix.hpp"
 #include "HPC_sparsemv.hpp"
@@ -220,13 +217,11 @@ int main(int argc, char *argv[]) {
         doc.get("Parallelism")->add("MPI not enabled", "");
 #endif
 
-#ifdef USING_OMP
-        int nthreads = 1;
-#pragma omp parallel
-        nthreads = omp_get_num_threads();
-        doc.get("Parallelism")->add("Number of OpenMP threads", nthreads);
+#ifdef USING_KOKKOS
+        int nthreads = Kokkos::DefaultExecutionSpace::concurrency();
+        doc.get("Parallelism")->add("Number of Kokkos threads", nthreads);
 #else
-        doc.get("Parallelism")->add("OpenMP not enabled", "");
+        doc.get("Parallelism")->add("Kokkos not enabled", "");
 #endif
 
         doc.add("Dimensions", "");

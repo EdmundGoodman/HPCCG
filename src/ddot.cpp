@@ -37,12 +37,12 @@
 //
 // ************************************************************************
 
-#ifdef USING_KOKKOS
-#endif
-#include "ddot.hpp"
-
-#include <Kokkos_Core.hpp>
 #include <iostream>
+#ifdef USING_KOKKOS
+#include <Kokkos_Core.hpp>
+#endif
+
+#include "ddot.hpp"
 
 /**
  * A method to compute the dot product of two vectors.
@@ -66,7 +66,12 @@ int ddot(const int n, const double* const x, const double* const y, double* cons
     if (y == x) {
 #ifdef USING_KOKKOS
     Kokkos::parallel_reduce(
-        n, KOKKOS_LAMBDA(const int i, double& ksum) { ksum += x[i] * x[i]; }, local_result);
+        n, 
+        KOKKOS_LAMBDA(const int i, double& ksum) { 
+            ksum += x[i] * x[i]; 
+        },
+        local_result
+    );
 #else
     for (int i = 0; i < n; i++) {
         local_result += x[i] * x[i];
@@ -75,7 +80,12 @@ int ddot(const int n, const double* const x, const double* const y, double* cons
     } else {
 #ifdef USING_KOKKOS
     Kokkos::parallel_reduce(
-        n, KOKKOS_LAMBDA(const int i, double& ksum) { ksum += x[i] * y[i]; }, local_result);
+        n,
+        KOKKOS_LAMBDA(const int i, double& ksum) {
+             ksum += x[i] * y[i];
+        },
+        local_result
+    );
 #else
         for (int i = 0; i < n; i++) {
             local_result += x[i] * y[i];
