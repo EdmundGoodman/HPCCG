@@ -35,6 +35,9 @@ if(CMAKE_BUILD_TYPE MATCHES "Debug")
     target_link_options(HPCCG PUBLIC -fsanitize=address -fsanitize=undefined)
 endif()
 
+# Set equivalent compiler optimisation flags
+target_compile_options(HPCCG PUBLIC -ftree-vectorize -ftree-vectorizer-verbose=2)
+
 # Print the compiler options set for debugging
 get_target_property(HPCCG_lib_CFLAGS HPCCG COMPILE_OPTIONS)
 message(STATUS "CXX HPCCG library flags: ${HPCCG_lib_CFLAGS}")
